@@ -4,14 +4,17 @@
   "description": "A premium professional Salla theme with advanced features and customization options",
   "author": "Alaa",
   "license": "MIT",
+
   "support": {
     "email": "support@example.com",
     "url": "https://example.com/support"
   },
+
   "previews": {
     "desktop": "https://via.placeholder.com/1920x1080",
     "mobile": "https://via.placeholder.com/375x667"
   },
+
   "settings": [
     {
       "key": "header_style",
@@ -165,15 +168,16 @@
     {
       "key": "popular_searches",
       "type": "text",
-      "title": "عمليات البحث الشائعة (مفصولة بفاصلة)",
+      "title": "عمليات البحث الشائعة",
       "default": "ساعات,أحذية,حقائب,عطور"
     }
   ],
+
   "blocks": [
     {
       "name": "hero",
       "title": "قسم البطل (Hero)",
-      "description": "عرض شرائح أو صورة رئيسية في أعلى الصفحة",
+      "description": "عرض شرائح أو صورة رئيسية",
       "preview": "https://via.placeholder.com/800x400",
       "fields": [
         {
@@ -208,40 +212,16 @@
           "type": "repeater",
           "title": "الشرائح",
           "fields": [
-            {
-              "key": "image",
-              "type": "image",
-              "title": "الصورة"
-            },
-            {
-              "key": "title",
-              "type": "text",
-              "title": "العنوان"
-            },
-            {
-              "key": "subtitle",
-              "type": "text",
-              "title": "العنوان الفرعي"
-            },
-            {
-              "key": "description",
-              "type": "textarea",
-              "title": "الوصف"
-            },
-            {
-              "key": "button_text",
-              "type": "text",
-              "title": "نص الزر"
-            },
-            {
-              "key": "button_link",
-              "type": "url",
-              "title": "رابط الزر"
-            },
+            { "key": "image", "type": "image", "title": "الصورة" },
+            { "key": "title", "type": "text", "title": "العنوان" },
+            { "key": "subtitle", "type": "text", "title": "العنوان الفرعي" },
+            { "key": "description", "type": "textarea", "title": "الوصف" },
+            { "key": "button_text", "type": "text", "title": "نص الزر" },
+            { "key": "button_link", "type": "url", "title": "رابط الزر" },
             {
               "key": "text_align",
               "type": "select",
-              "title": "محاذاة النص",
+              "title": "المحاذاة",
               "options": {
                 "text-right": "يمين",
                 "text-center": "وسط",
@@ -253,23 +233,15 @@
         }
       ]
     },
+
     {
       "name": "products-slider",
       "title": "عارض المنتجات",
-      "description": "عرض المنتجات في شريط تمرير أفقي",
+      "description": "عرض المنتجات في شريط تمرير",
       "preview": "https://via.placeholder.com/800x400",
       "fields": [
-        {
-          "key": "title",
-          "type": "text",
-          "title": "عنوان القسم",
-          "default": "منتجاتنا"
-        },
-        {
-          "key": "subtitle",
-          "type": "text",
-          "title": "العنوان الفرعي"
-        },
+        { "key": "title", "type": "text", "title": "عنوان القسم", "default": "منتجاتنا" },
+        { "key": "subtitle", "type": "text", "title": "العنوان الفرعي" },
         {
           "key": "products_source",
           "type": "select",
@@ -286,8 +258,7 @@
         {
           "key": "product_ids",
           "type": "text",
-          "title": "معرفات المنتجات (للمخصص)",
-          "hint": "أدخل معرفات المنتجات مفصولة بفاصلة"
+          "title": "معرفات المنتجات"
         },
         {
           "key": "products_limit",
@@ -300,7 +271,7 @@
         {
           "key": "slides_per_view",
           "type": "number",
-          "title": "عدد المنتجات المعروضة",
+          "title": "عدد المنتجات",
           "default": 4,
           "min": 2,
           "max": 6
@@ -317,32 +288,24 @@
           "title": "إظهار النقاط",
           "default": true
         },
-        {
-          "key": "view_all_link",
-          "type": "url",
-          "title": "رابط عرض الكل"
-        }
+        { "key": "view_all_link", "type": "url", "title": "رابط عرض الكل" }
       ]
     },
+
     {
       "name": "features",
       "title": "الميزات والخدمات",
       "description": "عرض ميزات وخدمات المتجر",
       "preview": "https://via.placeholder.com/800x400",
       "fields": [
-        {
-          "key": "title",
-          "type": "text",
-          "title": "عنوان القسم",
-          "default": "لماذا نحن؟"
-        },
+        { "key": "title", "type": "text", "title": "عنوان القسم", "default": "لماذا نحن؟" },
         {
           "key": "style",
           "type": "select",
-          "title": "نمط القسم",
+          "title": "النمط",
           "options": {
             "default": "افتراضي",
-            "gradient": "متدرج"
+            "gradient": "متدرّج"
           },
           "default": "default"
         },
@@ -351,10 +314,7 @@
           "type": "repeater",
           "title": "الميزات",
           "fields": [
-            {
-              "key": "icon",
-              "type": "select",
-              "title": "الأيقونة",
+            { "key": "icon", "type": "select", "title": "الأيقونة",
               "options": {
                 "truck": "شحن",
                 "shield": "أمان",
@@ -365,44 +325,28 @@
               },
               "default": "truck"
             },
-            {
-              "key": "title",
-              "type": "text",
-              "title": "العنوان"
-            },
-            {
-              "key": "description",
-              "type": "textarea",
-              "title": "الوصف"
-            }
+            { "key": "title", "type": "text", "title": "العنوان" },
+            { "key": "description", "type": "textarea", "title": "الوصف" }
           ]
         }
       ]
     },
+
     {
       "name": "categories-grid",
       "title": "شبكة الأقسام",
-      "description": "عرض أقسام المنتجات في شبكة",
+      "description": "عرض شبكة من أقسام المنتجات",
       "preview": "https://via.placeholder.com/800x400",
       "fields": [
-        {
-          "key": "title",
-          "type": "text",
-          "title": "عنوان القسم",
-          "default": "تسوق حسب القسم"
-        },
-        {
-          "key": "subtitle",
-          "type": "text",
-          "title": "العنوان الفرعي"
-        },
+        { "key": "title", "type": "text", "title": "عنوان القسم", "default": "تسوق حسب القسم" },
+        { "key": "subtitle", "type": "text", "title": "العنوان الفرعي" },
         {
           "key": "categories_source",
           "type": "select",
           "title": "مصدر الأقسام",
           "options": {
             "all": "جميع الأقسام",
-            "featured": "الأقسام المميزة",
+            "featured": "المميزة",
             "custom": "مخصص"
           },
           "default": "all"
@@ -410,8 +354,7 @@
         {
           "key": "category_ids",
           "type": "text",
-          "title": "معرفات الأقسام (للمخصص)",
-          "hint": "أدخل معرفات الأقسام مفصولة بفاصلة"
+          "title": "معرفات الأقسام"
         },
         {
           "key": "categories_limit",
@@ -447,5 +390,7 @@
         }
       ]
     }
-  ]
+  ],
+
+  "components": {}
 }
