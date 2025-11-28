@@ -1,0 +1,185 @@
+{#
+  Cart Drawer Component
+  Slide-in cart panel from the right side
+#}
+
+<div 
+  id="cart-drawer" 
+  class="cart-drawer fixed top-0 left-0 h-full w-full md:w-96 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-drawer"
+  data-cart-drawer
+  role="dialog"
+  aria-label="{{ trans('cart.your_cart') }}"
+  aria-hidden="true"
+>
+  
+  {# Drawer Header #}
+  <div class="cart-drawer-header flex items-center justify-between p-6 border-b border-gray-200">
+    <h3 class="text-lg font-bold">
+      {{ trans('cart.your_cart') }}
+      <span class="cart-items-count text-primary">(<span data-cart-count>{{ cart.count|default(0) }}</span>)</span>
+    </h3>
+    <button 
+      type="button"
+      class="cart-drawer-close p-2 hover:bg-gray-100 rounded-full transition-colors"
+      data-cart-drawer-close
+      aria-label="{{ trans('common.close') }}"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
+  </div>
+  
+  {# Drawer Body #}
+  <div class="cart-drawer-body flex-1 overflow-y-auto p-6" style="max-height: calc(100vh - 200px);">
+    
+    {# Empty Cart State #}
+    <div class="cart-empty text-center py-12" data-cart-empty style="display: {{ cart.count > 0 ? 'none' : 'block' }};">
+      <svg class="w-24 h-24 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+      </svg>
+      <p class="text-gray-500 mb-6">{{ trans('cart.empty_cart') }}</p>
+      <button 
+        type="button"
+        class="btn btn-primary px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
+        data-cart-drawer-close
+      >
+        {{ trans('cart.continue_shopping') }}
+      </button>
+    </div>
+    
+    {# Cart Items #}
+    <div class="cart-items space-y-4" data-cart-items style="display: {{ cart.count > 0 ? 'block' : 'none' }};">
+      {% if cart.items %}
+        {% for item in cart.items %}
+        <div class="cart-item flex space-x-4 space-x-reverse pb-4 border-b border-gray-100" data-item-id="{{ item.id }}">
+          
+          {# Product Image #}
+          <div class="cart-item-image flex-shrink-0">
+            <a href="{{ item.product.url }}">
+              <img 
+                src="{{ item.product.image }}" 
+                alt="{{ item.product.name }}"
+                class="w-20 h-20 object-cover rounded-lg"
+                loading="lazy"
+              >
+            </a>
+          </div>
+          
+          {# Product Info #}
+          <div class="cart-item-info flex-1 min-w-0">
+            <h4 class="text-sm font-medium mb-1 truncate">
+              <a href="{{ item.product.url }}" class="hover:text-primary transition-colors">
+                {{ item.product.name }}
+              </a>
+            </h4>
+            
+            {# Product Options #}
+            {% if item.options %}
+            <div class="text-xs text-gray-500 mb-2">
+              {% for option in item.options %}
+                <span>{{ option.name }}: {{ option.value }}</span>
+                {% if not loop.last %} | {% endif %}
+              {% endfor %}
+            </div>
+            {% endif %}
+            
+            {# Price & Quantity #}
+            <div class="flex items-center justify-between mt-2">
+              <div class="cart-item-price text-primary font-semibold">
+                {{ item.price }} {{ trans('common.currency') }}
+              </div>
+              
+              {# Quantity Controls #}
+              <div class="cart-item-quantity flex items-center space-x-2 space-x-reverse border border-gray-200 rounded-lg">
+                <button 
+                  type="button"
+                  class="qty-decrease px-2 py-1 hover:bg-gray-50 transition-colors"
+                  data-item-id="{{ item.id }}"
+                  data-action="decrease"
+                >
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
+                  </svg>
+                </button>
+                
+                <span class="qty-value px-3 text-sm font-medium" data-quantity>{{ item.quantity }}</span>
+                
+                <button 
+                  type="button"
+                  class="qty-increase px-2 py-1 hover:bg-gray-50 transition-colors"
+                  data-item-id="{{ item.id }}"
+                  data-action="increase"
+                >
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          {# Remove Button #}
+          <button 
+            type="button"
+            class="cart-item-remove p-1 hover:text-danger transition-colors"
+            data-item-id="{{ item.id }}"
+            data-action="remove"
+            aria-label="{{ trans('cart.remove') }}"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+            </svg>
+          </button>
+          
+        </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+    
+  </div>
+  
+  {# Drawer Footer #}
+  <div class="cart-drawer-footer border-t border-gray-200 p-6 bg-gray-50" data-cart-footer style="display: {{ cart.count > 0 ? 'block' : 'none' }};">
+    
+    {# Subtotal #}
+    <div class="cart-subtotal flex items-center justify-between mb-4">
+      <span class="text-gray-600">{{ trans('cart.subtotal') }}</span>
+      <span class="text-lg font-bold" data-cart-subtotal>
+        {{ cart.subtotal|default(0) }} {{ trans('common.currency') }}
+      </span>
+    </div>
+    
+    {# Shipping Notice #}
+    <p class="text-xs text-gray-500 mb-4 text-center">
+      الشحن والضرائب سيتم حسابها عند الدفع
+    </p>
+    
+    {# Action Buttons #}
+    <div class="space-y-3">
+      <a 
+        href="{{ link('checkout') }}" 
+        class="btn btn-primary w-full block text-center px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors font-medium"
+      >
+        {{ trans('cart.checkout') }}
+      </a>
+      
+      <a 
+        href="{{ link('cart') }}" 
+        class="btn btn-secondary w-full block text-center px-6 py-3 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors"
+      >
+        عرض السلة الكاملة
+      </a>
+    </div>
+    
+  </div>
+  
+</div>
+
+{# Overlay #}
+<div 
+  id="cart-drawer-overlay" 
+  class="cart-drawer-overlay fixed inset-0 bg-black bg-opacity-50 opacity-0 invisible transition-all duration-300 z-drawer"
+  data-cart-drawer-overlay
+  aria-hidden="true"
+></div>

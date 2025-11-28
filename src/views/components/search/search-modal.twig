@@ -1,0 +1,191 @@
+{#
+  Search Modal Component
+  Full-screen search overlay with live results
+#}
+
+<div 
+  id="search-modal" 
+  class="search-modal fixed inset-0 bg-white bg-opacity-95 backdrop-blur-sm opacity-0 invisible transition-all duration-300 z-modal"
+  data-search-modal
+  role="dialog"
+  aria-label="{{ trans('common.search') }}"
+  aria-hidden="true"
+>
+  
+  <div class="search-modal-container h-full flex flex-col">
+    
+    {# Search Header #}
+    <div class="search-modal-header border-b border-gray-200">
+      <div class="container py-6">
+        <div class="flex items-center justify-between">
+          
+          {# Search Form #}
+          <form 
+            class="search-form flex-1 max-w-3xl mx-auto"
+            action="{{ link('search') }}"
+            method="get"
+            data-search-form
+          >
+            <div class="relative">
+              <input 
+                type="search" 
+                name="q"
+                placeholder="{{ trans('header.search_placeholder') }}"
+                class="search-input w-full px-6 py-4 pr-14 text-lg border-2 border-gray-300 rounded-full focus:border-primary focus:outline-none transition-colors"
+                autocomplete="off"
+                data-search-input
+              >
+              
+              {# Search Icon #}
+              <div class="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+              </div>
+              
+              {# Clear Button #}
+              <button 
+                type="button"
+                class="search-clear absolute left-5 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 hidden"
+                data-search-clear
+                aria-label="مسح البحث"
+              >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+              </button>
+            </div>
+          </form>
+          
+          {# Close Button #}
+          <button 
+            type="button"
+            class="search-modal-close mr-6 p-2 hover:bg-gray-100 rounded-full transition-colors"
+            data-search-modal-close
+            aria-label="{{ trans('common.close') }}"
+          >
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+          
+        </div>
+      </div>
+    </div>
+    
+    {# Search Body #}
+    <div class="search-modal-body flex-1 overflow-y-auto">
+      <div class="container py-8">
+        
+        {# Initial State - Popular Searches #}
+        <div class="search-initial" data-search-initial>
+          
+          {# Popular Searches #}
+          {% if theme.settings.popular_searches %}
+          <div class="mb-8">
+            <h3 class="text-lg font-bold mb-4">عمليات بحث شائعة</h3>
+            <div class="flex flex-wrap gap-2">
+              {% for search in theme.settings.popular_searches|split(',') %}
+              <a 
+                href="{{ link('search') }}?q={{ search|trim }}" 
+                class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-full text-sm transition-colors"
+              >
+                {{ search|trim }}
+              </a>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+          
+          {# Popular Categories #}
+          {% if store.categories|length > 0 %}
+          <div>
+            <h3 class="text-lg font-bold mb-4">الأقسام الشائعة</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {% for category in store.categories|slice(0, 8) %}
+              <a 
+                href="{{ category.url }}" 
+                class="category-card group block p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                {% if category.image %}
+                <img 
+                  src="{{ category.image }}" 
+                  alt="{{ category.name }}"
+                  class="w-full h-32 object-cover rounded-lg mb-3"
+                  loading="lazy"
+                >
+                {% endif %}
+                <h4 class="font-medium text-sm group-hover:text-primary transition-colors">
+                  {{ category.name }}
+                </h4>
+              </a>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+          
+        </div>
+        
+        {# Loading State #}
+        <div class="search-loading hidden" data-search-loading>
+          <div class="flex items-center justify-center py-12">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+          </div>
+        </div>
+        
+        {# Results State #}
+        <div class="search-results hidden" data-search-results>
+          
+          {# Products Results #}
+          <div class="search-products mb-8" data-search-products>
+            <h3 class="text-lg font-bold mb-4">
+              المنتجات <span class="text-gray-500 text-base font-normal">(<span data-products-count>0</span>)</span>
+            </h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4" data-products-grid>
+              {# Products will be inserted here via JavaScript #}
+            </div>
+          </div>
+          
+          {# Categories Results #}
+          <div class="search-categories hidden" data-search-categories>
+            <h3 class="text-lg font-bold mb-4">
+              الأقسام <span class="text-gray-500 text-base font-normal">(<span data-categories-count>0</span>)</span>
+            </h3>
+            <div class="flex flex-wrap gap-2" data-categories-list>
+              {# Categories will be inserted here via JavaScript #}
+            </div>
+          </div>
+          
+        </div>
+        
+        {# No Results State #}
+        <div class="search-no-results hidden text-center py-12" data-search-no-results>
+          <svg class="w-24 h-24 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          <p class="text-gray-500 text-lg mb-2">{{ trans('common.no_results') }}</p>
+          <p class="text-gray-400 text-sm">جرب استخدام كلمات مفتاحية مختلفة</p>
+        </div>
+        
+      </div>
+    </div>
+    
+    {# Search Footer - Quick Actions #}
+    <div class="search-modal-footer border-t border-gray-200 py-4">
+      <div class="container">
+        <div class="flex items-center justify-center space-x-6 space-x-reverse text-sm text-gray-500">
+          <div class="flex items-center space-x-2 space-x-reverse">
+            <kbd class="px-2 py-1 bg-gray-100 rounded text-xs">ESC</kbd>
+            <span>للإغلاق</span>
+          </div>
+          <div class="flex items-center space-x-2 space-x-reverse">
+            <kbd class="px-2 py-1 bg-gray-100 rounded text-xs">↵</kbd>
+            <span>للبحث</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  
+</div>

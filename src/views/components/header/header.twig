@@ -1,0 +1,230 @@
+{#
+  Premium Header Component
+  Supports multiple styles: default, transparent, sticky, minimal
+#}
+
+{% set header_style = theme.settings.header_style|default('default') %}
+{% set header_bg = theme.settings.header_bg_color|default('#ffffff') %}
+{% set header_text = theme.settings.header_text_color|default('#1f2937') %}
+{% set show_search = theme.settings.show_search_in_header|default(true) %}
+{% set show_cart = theme.settings.show_cart_in_header|default(true) %}
+{% set show_wishlist = theme.settings.show_wishlist_in_header|default(true) %}
+
+<header 
+  id="site-header" 
+  class="site-header {{ header_style }}-header"
+  data-header-style="{{ header_style }}"
+  style="--header-bg: {{ header_bg }}; --header-text: {{ header_text }};"
+>
+  {# Top Bar - Announcement/Promo #}
+  {% if theme.settings.show_top_bar|default(false) %}
+  <div class="header-top-bar bg-primary text-white py-2 text-center text-sm">
+    <div class="container">
+      <p class="m-0">
+        {{ theme.settings.top_bar_text|default('شحن مجاني للطلبات فوق 200 ريال') }}
+      </p>
+    </div>
+  </div>
+  {% endif %}
+
+  {# Main Header #}
+  <div class="header-main {{ header_style == 'sticky' ? 'sticky top-0 z-header' : '' }}" 
+       style="background-color: var(--header-bg); color: var(--header-text);">
+    <div class="container">
+      <div class="header-wrapper flex items-center justify-between py-4 lg:py-5">
+        
+        {# Mobile Menu Toggle #}
+        <button 
+          type="button" 
+          class="mobile-menu-toggle lg:hidden p-2 -ml-2"
+          aria-label="{{ trans('mobile_menu.menu') }}"
+          data-mobile-menu-trigger
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+
+        {# Logo #}
+        <div class="header-logo flex-shrink-0">
+          <a href="{{ store.url }}" class="inline-block" aria-label="{{ store.name }}">
+            {% if store.logo %}
+              <img 
+                src="{{ store.logo }}" 
+                alt="{{ store.name }}" 
+                class="h-10 lg:h-12 w-auto"
+                loading="eager"
+              >
+            {% else %}
+              <span class="text-xl lg:text-2xl font-bold">{{ store.name }}</span>
+            {% endif %}
+          </a>
+        </div>
+
+        {# Desktop Navigation #}
+        <nav class="header-nav hidden lg:flex items-center flex-1 mx-8">
+          <ul class="flex items-center space-x-6 space-x-reverse">
+            <li>
+              <a href="{{ store.url }}" class="nav-link hover:text-primary transition-colors">
+                {{ trans('common.home') }}
+              </a>
+            </li>
+            
+            {# Categories Dropdown #}
+            {% if store.categories|length > 0 %}
+            <li class="relative group">
+              <button class="nav-link hover:text-primary transition-colors flex items-center">
+                {{ trans('common.categories') }}
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+              </button>
+              <div class="absolute top-full right-0 mt-2 w-56 bg-white shadow-dropdown rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-dropdown">
+                <ul class="py-2">
+                  {% for category in store.categories|slice(0, 8) %}
+                  <li>
+                    <a href="{{ category.url }}" class="block px-4 py-2 hover:bg-gray-50 transition-colors">
+                      {{ category.name }}
+                    </a>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </li>
+            {% endif %}
+
+            <li>
+              <a href="{{ link('products') }}" class="nav-link hover:text-primary transition-colors">
+                {{ trans('common.products') }}
+              </a>
+            </li>
+
+            {% if store.brands|length > 0 %}
+            <li>
+              <a href="{{ link('brands') }}" class="nav-link hover:text-primary transition-colors">
+                {{ trans('common.brands') }}
+              </a>
+            </li>
+            {% endif %}
+
+            {% if store.blog_enabled %}
+            <li>
+              <a href="{{ link('blog') }}" class="nav-link hover:text-primary transition-colors">
+                {{ trans('common.blog') }}
+              </a>
+            </li>
+            {% endif %}
+          </ul>
+        </nav>
+
+        {# Header Actions #}
+        <div class="header-actions flex items-center space-x-4 space-x-reverse">
+          
+          {# Search #}
+          {% if show_search %}
+          <button 
+            type="button"
+            class="header-action-btn p-2 hover:text-primary transition-colors"
+            aria-label="{{ trans('common.search') }}"
+            data-search-trigger
+          >
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+          </button>
+          {% endif %}
+
+          {# Wishlist #}
+          {% if show_wishlist and user %}
+          <a 
+            href="{{ link('wishlist') }}" 
+            class="header-action-btn relative p-2 hover:text-primary transition-colors"
+            aria-label="{{ trans('common.wishlist') }}"
+          >
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+            </svg>
+            {% if user.wishlist_count > 0 %}
+            <span class="absolute -top-1 -right-1 bg-danger text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+              {{ user.wishlist_count }}
+            </span>
+            {% endif %}
+          </a>
+          {% endif %}
+
+          {# Cart #}
+          {% if show_cart %}
+          <button 
+            type="button"
+            class="header-action-btn relative p-2 hover:text-primary transition-colors"
+            aria-label="{{ trans('common.cart') }}"
+            data-cart-trigger
+          >
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+            </svg>
+            <span class="cart-count absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+              {{ cart.count|default(0) }}
+            </span>
+          </button>
+          {% endif %}
+
+          {# User Account #}
+          <div class="relative group">
+            {% if user %}
+            <button class="header-action-btn p-2 hover:text-primary transition-colors flex items-center">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+              </svg>
+            </button>
+            <div class="absolute top-full left-0 mt-2 w-48 bg-white shadow-dropdown rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-dropdown">
+              <ul class="py-2">
+                <li>
+                  <a href="{{ link('profile') }}" class="block px-4 py-2 hover:bg-gray-50 transition-colors">
+                    {{ trans('common.account') }}
+                  </a>
+                </li>
+                <li>
+                  <a href="{{ link('orders') }}" class="block px-4 py-2 hover:bg-gray-50 transition-colors">
+                    طلباتي
+                  </a>
+                </li>
+                <li>
+                  <a href="{{ link('logout') }}" class="block px-4 py-2 hover:bg-gray-50 transition-colors text-danger">
+                    {{ trans('common.logout') }}
+                  </a>
+                </li>
+              </ul>
+            </div>
+            {% else %}
+            <a href="{{ link('login') }}" class="header-action-btn p-2 hover:text-primary transition-colors">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
+              </svg>
+            </a>
+            {% endif %}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {# Secondary Navigation (Optional) #}
+  {% if theme.settings.show_secondary_nav|default(false) %}
+  <div class="header-secondary bg-gray-50 border-t border-gray-200">
+    <div class="container">
+      <div class="flex items-center justify-center py-3 space-x-6 space-x-reverse text-sm">
+        <a href="#" class="hover:text-primary transition-colors">عروض خاصة</a>
+        <a href="#" class="hover:text-primary transition-colors">الأكثر مبيعاً</a>
+        <a href="#" class="hover:text-primary transition-colors">وصل حديثاً</a>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</header>
+
+{# Spacer for sticky header #}
+{% if header_style == 'sticky' %}
+<div class="header-spacer" style="height: var(--header-height, 80px);"></div>
+{% endif %}

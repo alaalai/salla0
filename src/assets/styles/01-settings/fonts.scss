@@ -1,0 +1,52 @@
+/**
+ * Fonts Configuration
+ */
+
+// Import Google Fonts (Cairo for Arabic)
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap');
+
+// Import additional fonts if needed
+// @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap');
+
+/**
+ * Font Variables
+ * These can be overridden from theme settings
+ */
+
+:root {
+  --font-main: 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-heading: var(--font-main);
+  --font-mono: 'Courier New', Courier, monospace;
+}
+
+/**
+ * Font Weights
+ */
+
+.font-light {
+  font-weight: 300;
+}
+
+.font-normal {
+  font-weight: 400;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.font-extrabold {
+  font-weight: 800;
+}
+
+.font-black {
+  font-weight: 900;
+}

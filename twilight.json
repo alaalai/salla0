@@ -1,0 +1,451 @@
+{
+  "name": "Premium Salla Theme",
+  "version": "1.0.0",
+  "description": "A premium professional Salla theme with advanced features and customization options",
+  "author": "Alaa",
+  "license": "MIT",
+  "support": {
+    "email": "support@example.com",
+    "url": "https://example.com/support"
+  },
+  "previews": {
+    "desktop": "https://via.placeholder.com/1920x1080",
+    "mobile": "https://via.placeholder.com/375x667"
+  },
+  "settings": [
+    {
+      "key": "header_style",
+      "type": "select",
+      "title": "نمط الهيدر",
+      "options": {
+        "default": "افتراضي",
+        "transparent": "شفاف",
+        "sticky": "ثابت",
+        "minimal": "بسيط"
+      },
+      "default": "default"
+    },
+    {
+      "key": "header_bg_color",
+      "type": "color",
+      "title": "لون خلفية الهيدر",
+      "default": "#ffffff"
+    },
+    {
+      "key": "header_text_color",
+      "type": "color",
+      "title": "لون نص الهيدر",
+      "default": "#1f2937"
+    },
+    {
+      "key": "show_top_bar",
+      "type": "switch",
+      "title": "إظهار الشريط العلوي",
+      "default": false
+    },
+    {
+      "key": "top_bar_text",
+      "type": "text",
+      "title": "نص الشريط العلوي",
+      "default": "شحن مجاني للطلبات فوق 200 ريال"
+    },
+    {
+      "key": "show_search_in_header",
+      "type": "switch",
+      "title": "إظهار البحث في الهيدر",
+      "default": true
+    },
+    {
+      "key": "show_cart_in_header",
+      "type": "switch",
+      "title": "إظهار السلة في الهيدر",
+      "default": true
+    },
+    {
+      "key": "show_wishlist_in_header",
+      "type": "switch",
+      "title": "إظهار المفضلة في الهيدر",
+      "default": true
+    },
+    {
+      "key": "show_secondary_nav",
+      "type": "switch",
+      "title": "إظهار القائمة الثانوية",
+      "default": false
+    },
+    {
+      "key": "footer_style",
+      "type": "select",
+      "title": "نمط الفوتر",
+      "options": {
+        "default": "افتراضي",
+        "minimal": "بسيط",
+        "extended": "موسع"
+      },
+      "default": "default"
+    },
+    {
+      "key": "footer_bg_color",
+      "type": "color",
+      "title": "لون خلفية الفوتر",
+      "default": "#1f2937"
+    },
+    {
+      "key": "footer_text_color",
+      "type": "color",
+      "title": "لون نص الفوتر",
+      "default": "#f9fafb"
+    },
+    {
+      "key": "primary_color",
+      "type": "color",
+      "title": "اللون الأساسي",
+      "default": "#0ea5e9"
+    },
+    {
+      "key": "secondary_color",
+      "type": "color",
+      "title": "اللون الثانوي",
+      "default": "#a855f7"
+    },
+    {
+      "key": "accent_color",
+      "type": "color",
+      "title": "اللون المميز",
+      "default": "#f59e0b"
+    },
+    {
+      "key": "main_font",
+      "type": "text",
+      "title": "الخط الأساسي",
+      "default": "Cairo, sans-serif"
+    },
+    {
+      "key": "heading_font",
+      "type": "text",
+      "title": "خط العناوين",
+      "default": "Cairo, sans-serif"
+    },
+    {
+      "key": "enable_animations",
+      "type": "switch",
+      "title": "تفعيل الحركات",
+      "default": true
+    },
+    {
+      "key": "product_card_style",
+      "type": "select",
+      "title": "نمط بطاقة المنتج",
+      "options": {
+        "default": "افتراضي",
+        "modern": "حديث",
+        "minimal": "بسيط",
+        "classic": "كلاسيكي"
+      },
+      "default": "modern"
+    },
+    {
+      "key": "show_product_quick_view",
+      "type": "switch",
+      "title": "إظهار العرض السريع للمنتج",
+      "default": true
+    },
+    {
+      "key": "products_per_row",
+      "type": "select",
+      "title": "عدد المنتجات في الصف",
+      "options": {
+        "2": "2",
+        "3": "3",
+        "4": "4",
+        "5": "5"
+      },
+      "default": "4"
+    },
+    {
+      "key": "popular_searches",
+      "type": "text",
+      "title": "عمليات البحث الشائعة (مفصولة بفاصلة)",
+      "default": "ساعات,أحذية,حقائب,عطور"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "hero",
+      "title": "قسم البطل (Hero)",
+      "description": "عرض شرائح أو صورة رئيسية في أعلى الصفحة",
+      "preview": "https://via.placeholder.com/800x400",
+      "fields": [
+        {
+          "key": "style",
+          "type": "select",
+          "title": "نمط العرض",
+          "options": {
+            "slider": "عرض شرائح",
+            "single": "صورة واحدة"
+          },
+          "default": "slider"
+        },
+        {
+          "key": "height",
+          "type": "select",
+          "title": "ارتفاع القسم",
+          "options": {
+            "small": "صغير",
+            "medium": "متوسط",
+            "large": "كبير"
+          },
+          "default": "large"
+        },
+        {
+          "key": "show_overlay",
+          "type": "switch",
+          "title": "إظهار طبقة التعتيم",
+          "default": true
+        },
+        {
+          "key": "slides",
+          "type": "repeater",
+          "title": "الشرائح",
+          "fields": [
+            {
+              "key": "image",
+              "type": "image",
+              "title": "الصورة"
+            },
+            {
+              "key": "title",
+              "type": "text",
+              "title": "العنوان"
+            },
+            {
+              "key": "subtitle",
+              "type": "text",
+              "title": "العنوان الفرعي"
+            },
+            {
+              "key": "description",
+              "type": "textarea",
+              "title": "الوصف"
+            },
+            {
+              "key": "button_text",
+              "type": "text",
+              "title": "نص الزر"
+            },
+            {
+              "key": "button_link",
+              "type": "url",
+              "title": "رابط الزر"
+            },
+            {
+              "key": "text_align",
+              "type": "select",
+              "title": "محاذاة النص",
+              "options": {
+                "text-right": "يمين",
+                "text-center": "وسط",
+                "text-left": "يسار"
+              },
+              "default": "text-right"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "products-slider",
+      "title": "عارض المنتجات",
+      "description": "عرض المنتجات في شريط تمرير أفقي",
+      "preview": "https://via.placeholder.com/800x400",
+      "fields": [
+        {
+          "key": "title",
+          "type": "text",
+          "title": "عنوان القسم",
+          "default": "منتجاتنا"
+        },
+        {
+          "key": "subtitle",
+          "type": "text",
+          "title": "العنوان الفرعي"
+        },
+        {
+          "key": "products_source",
+          "type": "select",
+          "title": "مصدر المنتجات",
+          "options": {
+            "latest": "الأحدث",
+            "featured": "المميزة",
+            "bestsellers": "الأكثر مبيعاً",
+            "sale": "العروض",
+            "custom": "مخصص"
+          },
+          "default": "latest"
+        },
+        {
+          "key": "product_ids",
+          "type": "text",
+          "title": "معرفات المنتجات (للمخصص)",
+          "hint": "أدخل معرفات المنتجات مفصولة بفاصلة"
+        },
+        {
+          "key": "products_limit",
+          "type": "number",
+          "title": "عدد المنتجات",
+          "default": 12,
+          "min": 4,
+          "max": 24
+        },
+        {
+          "key": "slides_per_view",
+          "type": "number",
+          "title": "عدد المنتجات المعروضة",
+          "default": 4,
+          "min": 2,
+          "max": 6
+        },
+        {
+          "key": "show_arrows",
+          "type": "switch",
+          "title": "إظهار الأسهم",
+          "default": true
+        },
+        {
+          "key": "show_dots",
+          "type": "switch",
+          "title": "إظهار النقاط",
+          "default": true
+        },
+        {
+          "key": "view_all_link",
+          "type": "url",
+          "title": "رابط عرض الكل"
+        }
+      ]
+    },
+    {
+      "name": "features",
+      "title": "الميزات والخدمات",
+      "description": "عرض ميزات وخدمات المتجر",
+      "preview": "https://via.placeholder.com/800x400",
+      "fields": [
+        {
+          "key": "title",
+          "type": "text",
+          "title": "عنوان القسم",
+          "default": "لماذا نحن؟"
+        },
+        {
+          "key": "style",
+          "type": "select",
+          "title": "نمط القسم",
+          "options": {
+            "default": "افتراضي",
+            "gradient": "متدرج"
+          },
+          "default": "default"
+        },
+        {
+          "key": "features",
+          "type": "repeater",
+          "title": "الميزات",
+          "fields": [
+            {
+              "key": "icon",
+              "type": "select",
+              "title": "الأيقونة",
+              "options": {
+                "truck": "شحن",
+                "shield": "أمان",
+                "refresh": "إرجاع",
+                "support": "دعم",
+                "gift": "هدايا",
+                "star": "جودة"
+              },
+              "default": "truck"
+            },
+            {
+              "key": "title",
+              "type": "text",
+              "title": "العنوان"
+            },
+            {
+              "key": "description",
+              "type": "textarea",
+              "title": "الوصف"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "categories-grid",
+      "title": "شبكة الأقسام",
+      "description": "عرض أقسام المنتجات في شبكة",
+      "preview": "https://via.placeholder.com/800x400",
+      "fields": [
+        {
+          "key": "title",
+          "type": "text",
+          "title": "عنوان القسم",
+          "default": "تسوق حسب القسم"
+        },
+        {
+          "key": "subtitle",
+          "type": "text",
+          "title": "العنوان الفرعي"
+        },
+        {
+          "key": "categories_source",
+          "type": "select",
+          "title": "مصدر الأقسام",
+          "options": {
+            "all": "جميع الأقسام",
+            "featured": "الأقسام المميزة",
+            "custom": "مخصص"
+          },
+          "default": "all"
+        },
+        {
+          "key": "category_ids",
+          "type": "text",
+          "title": "معرفات الأقسام (للمخصص)",
+          "hint": "أدخل معرفات الأقسام مفصولة بفاصلة"
+        },
+        {
+          "key": "categories_limit",
+          "type": "number",
+          "title": "عدد الأقسام",
+          "default": 8,
+          "min": 4,
+          "max": 16
+        },
+        {
+          "key": "grid_columns",
+          "type": "select",
+          "title": "عدد الأعمدة",
+          "options": {
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "6": "6"
+          },
+          "default": "4"
+        },
+        {
+          "key": "show_products_count",
+          "type": "switch",
+          "title": "إظهار عدد المنتجات",
+          "default": true
+        },
+        {
+          "key": "show_view_all",
+          "type": "switch",
+          "title": "إظهار زر عرض الكل",
+          "default": true
+        }
+      ]
+    }
+  ]
+}

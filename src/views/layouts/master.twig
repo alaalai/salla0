@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="{{ store.locale }}" dir="{{ store.dir }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    {# SEO Meta Tags #}
+    <title>{{ page.title }} - {{ store.name }}</title>
+    <meta name="description" content="{{ page.description|default(store.description) }}">
+    <meta name="keywords" content="{{ page.keywords|default(store.keywords) }}">
+    
+    {# Open Graph Meta Tags #}
+    <meta property="og:title" content="{{ page.title }} - {{ store.name }}">
+    <meta property="og:description" content="{{ page.description|default(store.description) }}">
+    <meta property="og:image" content="{{ page.image|default(store.logo) }}">
+    <meta property="og:url" content="{{ page.url }}">
+    <meta property="og:type" content="website">
+    
+    {# Twitter Card Meta Tags #}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ page.title }} - {{ store.name }}">
+    <meta name="twitter:description" content="{{ page.description|default(store.description) }}">
+    <meta name="twitter:image" content="{{ page.image|default(store.logo) }}">
+    
+    {# Favicon #}
+    {% if store.favicon %}
+    <link rel="icon" type="image/x-icon" href="{{ store.favicon }}">
+    {% endif %}
+    
+    {# Preconnect for Performance #}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://cdn.salla.sa">
+    
+    {# CSS Variables for Theme Customization #}
+    <style>
+        :root {
+            --color-primary: {{ theme.settings.primary_color|default('#0ea5e9') }};
+            --color-primary-light: {{ theme.settings.primary_color|default('#0ea5e9') }}20;
+            --color-primary-dark: {{ theme.settings.primary_color|default('#0ea5e9') }}dd;
+            --color-secondary: {{ theme.settings.secondary_color|default('#a855f7') }};
+            --color-secondary-light: {{ theme.settings.secondary_color|default('#a855f7') }}20;
+            --color-secondary-dark: {{ theme.settings.secondary_color|default('#a855f7') }}dd;
+            --color-accent: {{ theme.settings.accent_color|default('#f59e0b') }};
+            --color-accent-light: {{ theme.settings.accent_color|default('#f59e0b') }}20;
+            --color-accent-dark: {{ theme.settings.accent_color|default('#f59e0b') }}dd;
+            --font-main: {{ theme.settings.main_font|default('Cairo, sans-serif') }};
+            --font-heading: {{ theme.settings.heading_font|default('var(--font-main)') }};
+            --header-height: 80px;
+        }
+        
+        body {
+            font-family: var(--font-main);
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+        }
+    </style>
+    
+    {# Twilight CSS - Required #}
+    {{ twilight.head }}
+    
+    {# Theme Styles #}
+    <link rel="stylesheet" href="{{ 'app.css' | asset }}">
+    
+    {# Custom Head Content #}
+    {% block head %}{% endblock %}
+</head>
+
+<body class="antialiased {{ page.slug }}-page" data-page="{{ page.slug }}">
+    
+    {# Skip to Content (Accessibility) #}
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded">
+        تخطي إلى المحتوى الرئيسي
+    </a>
+    
+    {# Site Wrapper #}
+    <div id="app" class="site-wrapper min-h-screen flex flex-col">
+        
+        {# Header Component #}
+        {% component 'header.header' %}
+        
+        {# Main Content #}
+        <main id="main-content" class="site-main flex-1" role="main">
+            {% block content %}{% endblock %}
+        </main>
+        
+        {# Footer Component #}
+        {% component 'footer.footer' %}
+        
+    </div>
+    
+    {# Mobile Menu Component #}
+    {% component 'mobile-menu.mobile-menu' %}
+    
+    {# Cart Drawer Component #}
+    {% component 'cart.cart-drawer' %}
+    
+    {# Search Modal Component #}
+    {% component 'search.search-modal' %}
+    
+    {# Back to Top Button #}
+    <button 
+        id="back-to-top" 
+        class="fixed bottom-6 left-6 bg-primary text-white w-12 h-12 rounded-full shadow-lg opacity-0 invisible transition-all duration-300 hover:bg-primary-dark z-40 flex items-center justify-center"
+        aria-label="العودة للأعلى"
+    >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+        </svg>
+    </button>
+    
+    {# Twilight Scripts - Required #}
+    {{ twilight.footer }}
+    
+    {# Theme Scripts #}
+    <script src="{{ 'app.js' | asset }}" defer></script>
+    
+    {# Page Specific Scripts #}
+    {% block scripts %}{% endblock %}
+    
+    {# Custom Footer Content #}
+    {% block footer_scripts %}{% endblock %}
+    
+    {# Analytics & Tracking #}
+    {% if store.google_analytics %}
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ store.google_analytics }}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '{{ store.google_analytics }}');
+    </script>
+    {% endif %}
+    
+</body>
+</html>

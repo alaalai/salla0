@@ -1,0 +1,96 @@
+{#
+  Products Slider Component
+  Displays products in a horizontal slider
+#}
+
+{% set section_title = block.settings.title|default('منتجاتنا') %}
+{% set section_subtitle = block.settings.subtitle %}
+{% set products_source = block.settings.products_source|default('latest') %}
+{% set products_limit = block.settings.products_limit|default(12) %}
+{% set show_arrows = block.settings.show_arrows|default(true) %}
+{% set show_dots = block.settings.show_dots|default(true) %}
+{% set slides_per_view = block.settings.slides_per_view|default(4) %}
+
+{# Get products based on source #}
+{% if products_source == 'featured' %}
+  {% set products = store.featured_products|slice(0, products_limit) %}
+{% elseif products_source == 'bestsellers' %}
+  {% set products = store.bestsellers|slice(0, products_limit) %}
+{% elseif products_source == 'sale' %}
+  {% set products = store.sale_products|slice(0, products_limit) %}
+{% elseif products_source == 'custom' and block.settings.product_ids %}
+  {% set products = salla.products(block.settings.product_ids) %}
+{% else %}
+  {% set products = store.latest_products|slice(0, products_limit) %}
+{% endif %}
+
+{% if products|length > 0 %}
+<section class="products-slider-section py-12 md:py-16 bg-white">
+  <div class="container">
+    
+    {# Section Header #}
+    <div class="section-header mb-8 md:mb-12 text-center">
+      {% if section_subtitle %}
+      <p class="section-subtitle text-primary text-sm md:text-base font-medium mb-2">
+        {{ section_subtitle }}
+      </p>
+      {% endif %}
+      
+      <h2 class="section-title text-2xl md:text-4xl font-bold mb-4">
+        {{ section_title }}
+      </h2>
+      
+      {% if block.settings.view_all_link %}
+      <a 
+        href="{{ block.settings.view_all_link }}" 
+        class="inline-flex items-center text-primary hover:text-primary-dark transition-colors font-medium"
+      >
+        {{ trans('common.view_all') }}
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+      </a>
+      {% endif %}
+    </div>
+    
+    {# Products Slider #}
+    <div class="products-slider-wrapper relative">
+      <div class="products-slider swiper" data-products-slider data-slides="{{ slides_per_view }}">
+        <div class="swiper-wrapper">
+          {% for product in products %}
+          <div class="swiper-slide">
+            {% include 'partials.product-card' with {product: product} %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      
+      {# Navigation Arrows #}
+      {% if show_arrows %}
+      <div class="products-slider-navigation">
+        <div class="products-slider-prev absolute top-1/2 -right-4 md:-right-6 transform -translate-y-1/2 z-10 cursor-pointer">
+          <div class="w-10 h-10 md:w-12 md:h-12 bg-white hover:bg-primary text-gray-800 hover:text-white rounded-full flex items-center justify-center transition-all shadow-lg">
+            <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+          </div>
+        </div>
+        <div class="products-slider-next absolute top-1/2 -left-4 md:-left-6 transform -translate-y-1/2 z-10 cursor-pointer">
+          <div class="w-10 h-10 md:w-12 md:h-12 bg-white hover:bg-primary text-gray-800 hover:text-white rounded-full flex items-center justify-center transition-all shadow-lg">
+            <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      
+      {# Pagination Dots #}
+      {% if show_dots %}
+      <div class="products-slider-pagination mt-8 flex justify-center"></div>
+      {% endif %}
+    </div>
+    
+  </div>
+</section>
+{% endif %}

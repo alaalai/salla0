@@ -1,0 +1,75 @@
+{
+  "common": {
+    "search": "Search",
+    "cart": "Cart",
+    "wishlist": "Wishlist",
+    "account": "My Account",
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register",
+    "home": "Home",
+    "shop": "Shop",
+    "categories": "Categories",
+    "products": "Products",
+    "brands": "Brands",
+    "blog": "Blog",
+    "contact": "Contact Us",
+    "about": "About Us",
+    "more": "More",
+    "view_all": "View All",
+    "add_to_cart": "Add to Cart",
+    "buy_now": "Buy Now",
+    "quick_view": "Quick View",
+    "close": "Close",
+    "loading": "Loading...",
+    "no_results": "No results found",
+    "currency": "SAR"
+  },
+  "header": {
+    "welcome": "Welcome",
+    "search_placeholder": "Search for products...",
+    "cart_empty": "Cart is empty",
+    "wishlist_empty": "Wishlist is empty"
+  },
+  "footer": {
+    "about_us": "About Us",
+    "quick_links": "Quick Links",
+    "customer_service": "Customer Service",
+    "follow_us": "Follow Us",
+    "newsletter": "Newsletter",
+    "newsletter_text": "Subscribe to our newsletter for latest offers and news",
+    "subscribe": "Subscribe",
+    "email_placeholder": "Enter your email",
+    "all_rights_reserved": "All Rights Reserved"
+  },
+  "product": {
+    "price": "Price",
+    "quantity": "Quantity",
+    "availability": "Availability",
+    "in_stock": "In Stock",
+    "out_of_stock": "Out of Stock",
+    "sku": "SKU",
+    "categories": "Categories",
+    "tags": "Tags",
+    "share": "Share",
+    "description": "Description",
+    "reviews": "Reviews",
+    "specifications": "Specifications",
+    "related_products": "Related Products",
+    "you_may_also_like": "You May Also Like"
+  },
+  "cart": {
+    "your_cart": "Your Cart",
+    "empty_cart": "Cart is empty",
+    "continue_shopping": "Continue Shopping",
+    "subtotal": "Subtotal",
+    "total": "Total",
+    "checkout": "Checkout",
+    "remove": "Remove",
+    "update": "Update"
+  },
+  "mobile_menu": {
+    "menu": "Menu",
+    "close_menu": "Close Menu"
+  }
+}
